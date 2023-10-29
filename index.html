@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" initial-scale=1.0>
+    <title>JS Simulation</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body>
+    <main>
+        <form onsubmit="submitWord(event)">
+            <div class="emailBox">
+                <h4>Rascunho de um novo e-mail</h4>
+                <input type="text" placeholder="Destinatário">
+                <input type="text" placeholder="Em cópia">
+                <textarea id="emailTextArea"></textarea>
+                <button>Submit</button>
+            </div>
+        </form>
+    </main>
+    <script>
+        function submitWord(event) {
+            event.preventDefault();
+            const word = document.getElementById('emailTextArea').value;
+            console.log(word);  
+
+            fetch('http://localhost:3000/add-word', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ word })
+            }).then(response => response.json()).then(data => {
+                alert(data.message);
+            });
+        }
+    </script>
+</body>
+
+</html>
